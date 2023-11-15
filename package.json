@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.8.0",
-    "@vue/compiler-sfc": "^3.3.7"
+    "@pinia/nuxt": "^0.5.1",
+    "@vue/compiler-sfc": "^3.3.7",
+    "pinia": "^2.1.7"
   }
 }
