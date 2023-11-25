@@ -30,7 +30,7 @@ const submitCategory = async () => {
         <div class="w-[500px]">
             <h1 class="text-2xl mb-7 font-medium">Create Category</h1>
             <div v-if="isShowAlert" class="p-4 mb-4 text-sm rounded-lg bg-green-100 text-green-800">
-                {{ message }}
+                {{ 'BERHASIL' }}
             </div>
             <form @submit.prevent="submitCategory">
                 <div class="mb-6">

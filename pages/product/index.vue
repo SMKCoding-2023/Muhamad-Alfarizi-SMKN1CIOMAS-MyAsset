@@ -3,6 +3,10 @@ import { useCategoryStore } from '~/stores/category';
 import { useProductsStore } from '~/stores/products';
 import { ref, onMounted } from 'vue';
 
+definePageMeta({
+    middleware: ["user-access"]
+});
+
 const categoryStore = useCategoryStore();
 const productStore = useProductsStore();
 const allProducts = ref([]);

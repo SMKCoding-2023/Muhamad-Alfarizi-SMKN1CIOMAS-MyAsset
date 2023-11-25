@@ -1,3 +1,25 @@
+<script lang="ts" setup>
+import { useAuthStore } from "~/stores/auth"
+const authStore = useAuthStore();
+const isAuthenticated = ref();
+const router = useRouter();
+
+isAuthenticated.value = useCookie("access_token").value;
+
+const logout = async () => {
+  await authStore.logout();
+  const accessToken = useCookie("access_token");
+  const refreshToken = useCookie("refresh_token");
+  accessToken.value = null;
+  refreshToken.value = null;
+  setTimeout(() => {
+    isAuthenticated.value = useCookie("access_token").value;
+  }, 100);
+  router.push({
+    path: "/"
+  })
+}
+</script>
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -21,6 +43,10 @@
           <NuxtLink to="/product">Product</NuxtLink>
           <NuxtLink to="/cart">Cart</NuxtLink>
           <NuxtLink to="#">Contact</NuxtLink>
+          <NuxtLink v-if="!isAuthenticated" to="/login" class="text-base bg-blue-600
+px-6 py-2 text-white rounded-lg hover:bg-blue-600/80">Login</NuxtLink>
+  <div v-else class="text-base cursor-pointer bg-red-600 px-6 py-2 text-white
+rounded-lg hover:bg-red-600/80" @click="logout">Logout</div>
         </ul>
       </div>
     </div>
