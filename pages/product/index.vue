@@ -1,57 +1,64 @@
-<script lang="ts" setup>
-import { useCategoryStore } from '~/stores/category';
-import { useProductsStore } from '~/stores/products';
-import { ref, onMounted } from 'vue';
+    <script lang="ts" setup>
+    import { useCategoryStore } from '~/stores/category';
+    import { useProductsStore } from '~/stores/products';
+    import { ref, onMounted } from 'vue';
 
-definePageMeta({
-    middleware: ["user-access"]
-});
+    definePageMeta({
+        middleware: ["user-access"]
+    });
 
-const categoryStore = useCategoryStore();
-const productStore = useProductsStore();
-const allProducts = ref([]);
-const selectedCategory = ref("");
+    const categoryStore = useCategoryStore();
+    const productStore = useProductsStore();
+    const allProducts = ref([]);
+    const selectedCategory = ref("");
 
-// Fetch categories and products when the component is mounted
-onMounted(async () => {
-    await categoryStore.getAllCategory();
-    await productStore.getAllProducts();
-    allProducts.value = productStore.products;
-});
-
-// Watch for changes in the selectedCategory and update the displayed products accordingly
-watch(selectedCategory, (newCategory) => {
-    if (newCategory) {
-        allProducts.value = productStore.products.filter(product => product.category === newCategory);
-    } else {
+    // Fetch categories and products when the component is mounted
+    onMounted(async () => {
+        await categoryStore.getAllCategory();
+        await productStore.getAllProducts();
         allProducts.value = productStore.products;
-    }
-});
+    });
 
-</script>
+    // Watch for changes in the selectedCategory and update the displayed products accordingly
+    watch(selectedCategory, (newCategory) => {
+        if (newCategory) {
+            allProducts.value = productStore.products.filter(product => product.category === newCategory);
+        } else {
+            allProducts.value = productStore.products;
+        }
+    });
 
-<template>
-    <section>
-        <div class="container">
-            <div class="py-10">
-                <div class="mb-6 flex justify-end gap-6">
-                    <NuxtLink to="/category/create"
-                        class="bg-orange-500 text-white flex justify-center items-center px-3 rounded-lg">
-                        Create Category
-                    </NuxtLink>
-                    <NuxtLink to="/product/create"
-                        class="bg-green-500 text-white flex justify-center items-center px-3 rounded-lg">
-                        Create Products
-                    </NuxtLink>
-                    <!-- Dropdown now uses categories from the categoryStore -->
-                    <Dropdown :categories="categoryStore.categories" @selected-category="selectedCategory = $event" />
-                </div>
-                <div class="flex gap-6 flex-wrap mx-auto">
-                    <template v-for="(item, index) in allProducts" :key="index">
-                        <CardsCardProduct :product="item" class="w-[calc(100%/4-18px)]" />
-                    </template>
+    </script>
+
+    <template>
+        <section>
+            <div class="container">
+                <div class="py-10">
+                    <div class="mb-6 flex justify-end gap-6" style="margin-right: 10px; margin-left: 10px;">
+                        <NuxtLink to="/category/create"
+                            class="bg-orange-500 text-white flex justify-center items-center px-3 rounded-lg">
+                            Create Category
+                        </NuxtLink>
+                        <NuxtLink to="/product/create"
+                            class="bg-green-500 text-white flex justify-center items-center px-3 rounded-lg">
+                            Create Products
+                        </NuxtLink>
+                        <!-- Dropdown now uses categories from the categoryStore -->
+                        <Dropdown :categories="categoryStore.categories" @selected-category="selectedCategory = $event" />
+                    </div>
+                    <div class="flex gap-6 flex-wrap mx-auto" style="margin-left: 10px;margin-right: 10px;">
+                        <template v-for="(item, index) in allProducts" :key="index">
+                            <CardsCardProduct :product="item" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5" />
+                            <!-- 
+                                w-full: Untuk layar kecil
+                                sm:w-1/2: Setengah lebar untuk layar kecil dan di atasnya
+                                md:w-1/3: Sepertiga lebar untuk layar sedang dan di atasnya
+                                lg:w-1/4: Seperempat lebar untuk layar besar dan di atasnya
+                                xl:w-1/5: Seperlima lebar untuk layar sangat besar
+                            -->
+                        </template>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</template>
+        </section>
+    </template>

@@ -26,7 +26,7 @@ const submitCategory = async () => {
 };
 </script>
 <template>
-    <section class="flex justify-center py-10">
+    <section class="flex justify-center py-10" style="margin-left: 5px;margin-right: 5px;">
         <div class="w-[500px]">
             <h1 class="text-2xl mb-7 font-medium">Create Category</h1>
             <div v-if="isShowAlert" class="p-4 mb-4 text-sm rounded-lg bg-green-100 text-green-800">
@@ -40,7 +40,7 @@ const submitCategory = async () => {
                         placeholder="Enter Category Name" required />
                 </div>
                 <button type="submit"
-                    class="text-white bg-primary hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                    class="text-blue bg-green-600 hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                     Submit
                 </button>
             </form>

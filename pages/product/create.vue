@@ -77,15 +77,14 @@ const uploadFile = async (formFile: any) => {
 
 <template>
     <section class="flex justify-center py-10">
-        <div class="w-[500px]">
+        <div class="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3" style="margin-left: 5px;">
             <h1 class="text-2xl mb-7 font-medium">Create Products</h1>
-            <div v-if="isShowAlert"
-                :class="`p-4 mb-4 text-sm rounded-lg ${isSuccess ? 'bg-green-100 text-green-800' : 'text-red-800 bg-red-100'}`"
-                role="alert">
+            <div v-if="isShowAlert" :class="`p-4 mb-4 text-sm rounded-lg ${isSuccess ? 'bg-green-100 text-green-800' : 'text-red-800 bg-red-100'
+                }`" role="alert">
                 {{ message }}
             </div>
-            <form @submit.prevent="createProduct">
-                <div class="mb-6" v-for="(item, index) in formCreateProduct" :key="index">
+            <form @submit.prevent="createProduct" style="margin-left: 5px;margin-right: 5px;">
+                <div v-for="(item, index) in formCreateProduct" :key="index" class="mb-6">
                     <label :for="item.name" class="block mb-2 text-sm font-medium text-gray-900">
                         {{ item.label }}
                     </label>
@@ -93,18 +92,19 @@ const uploadFile = async (formFile: any) => {
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         v-model="item.value">
                         <option disabled value="">Choose Category</option>
-                        <option v-for="(category, index) in categories" :key="index" :value="category.name">{{ category.name
-                        }}</option>
+                        <option v-for="(category, index) in categories" :key="index" :value="category.name">
+                            {{ category.name }}
+                        </option>
                     </select>
                     <input v-else-if="item.type === 'file'" :type="item.type" :id="item.name" @change="item.value = $event"
                         class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:bg-primary file:border-none file:px-3 file:py-2 file:text-white file:mr-3"
-                        :required="item.required">
+                        :required="item.required" />
                     <input v-else :type="item.type" :id="item.name" v-model="item.value"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        :placeholder="item.placeholder" :required="item.required">
+                        :placeholder="item.placeholder" :required="item.required" />
                 </div>
                 <button type="submit"
-                    class="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                    class="text-blue bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                     <span v-if="!isLoading">Submit</span>
                     <div v-else class="flex items-center gap-3">
                         <div class="w-5 h-5 rounded-full border-2 border-t-blue-500 animate-spin"></div>
